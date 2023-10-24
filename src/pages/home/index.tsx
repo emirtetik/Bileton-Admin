@@ -1,10 +1,14 @@
+import Sidebar from "../../components/sidebar/Sidebar";
 
 const Home = () => {
   return (
-    <div className="text-3xl bg-red-950 font-extrabold text-white py-4 flex justify-center items-center "> 
-       Hoşgeldin!!
+    <div className="flex">
+        <Sidebar />
+      <div className="w-3/4">
+        <h1>Anasayfa</h1>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
