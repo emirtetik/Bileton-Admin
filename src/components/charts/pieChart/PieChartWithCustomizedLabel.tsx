@@ -25,20 +25,18 @@ const renderCustomizedLabel = ({cx,cy,midAngle,innerRadius,outerRadius,percent,i
   );
 };
 
-interface chartHeightProps {
+interface chartProps {
   chartHeight: number;
+  data:chartDataProps[]
 }
-export default function PieChartWithCustomizedLabel({
-  chartHeight,
-}: chartHeightProps) {
-  const chartsDataUrl: string = "data.json";
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.pieChartWithCustomizedLabelData);
-    });
-  }, []);
+
+interface chartDataProps {
+  name:string,
+  value:number
+}
+
+export default function PieChartWithCustomizedLabel({ chartHeight, data }: chartProps) {
+
   return (
     <ResponsiveContainer width="100%" height={chartHeight}>
       <PieChart width={400} height={400}>
