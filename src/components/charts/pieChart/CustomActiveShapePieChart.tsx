@@ -1,6 +1,5 @@
-import {useState, useEffect } from "react";
+import { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
-import getChartsData from "../../../services/services";
 //@ts-ignore
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -74,25 +73,30 @@ const renderActiveShape = (props) => {
     </g>
   );
 };
+
+interface chartProps {
+  chartHeight: number;
+  data: chartDataProps[];
+}
+
+interface chartDataProps {
+  name: string;
+  value: number;
+}
+
 //@ts-ignore
-function CustomActiveShapePieChart(props) {
+export default function CustomActiveShapePieChart({
+  chartHeight,
+  data,
+}: chartProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [data, setData] = useState([]);
   //@ts-ignore
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
   };
 
-  useEffect(() => {
-    const chartsDataUrl = "data.json";
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.customActiveShapePieChartData);
-    });
-  }, []);
-
   return (
-    <ResponsiveContainer width="100%" height={props.chartHeight}>
+    <ResponsiveContainer width="100%" height={chartHeight}>
       <PieChart width={400} height={400}>
         <Pie
           activeIndex={activeIndex}
@@ -110,5 +114,3 @@ function CustomActiveShapePieChart(props) {
     </ResponsiveContainer>
   );
 }
-
-export default CustomActiveShapePieChart;

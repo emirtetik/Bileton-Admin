@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   RadialBarChart,
   RadialBar,
@@ -6,7 +5,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import getChartsData from "../../../services/services";
 
 const style = {
   top: "50%",
@@ -15,18 +13,20 @@ const style = {
   lineHeight: "24px",
 };
 
-interface chartHeightProps {
+interface chartProps {
   chartHeight: number;
+  data:chartDataProps[]
 }
-export default function RadialBarCharts({ chartHeight }: chartHeightProps) {
-  const chartsDataUrl: string = "data.json";
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.radialBarChartsData);
-    });
-  }, []);
+
+interface chartDataProps {
+  name:string,
+  uv:number,
+  pv:number,
+  fill:string
+}
+
+export default function RadialBarCharts({ chartHeight, data }: chartProps) {
+ 
   return (
     <ResponsiveContainer width="100%" height={chartHeight}>
       <RadialBarChart

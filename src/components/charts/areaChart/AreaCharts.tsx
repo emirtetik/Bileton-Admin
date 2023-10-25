@@ -7,22 +7,20 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import getChartsData from "../../../services/services";
-import { useEffect, useState } from "react";
 
-interface chartHeightProps {
+interface chartProps {
   chartHeight: number;
+  data:chartDataProps[]
 }
 
-export default function AreaCharts({ chartHeight }: chartHeightProps) {
-  const chartsDataUrl: string = "data.json";
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.areaChartsData);
-    });
-  }, []);
+interface chartDataProps {
+  name:string,
+  uv:number,
+  pv:number,
+  amt:number
+}
+
+export default function AreaCharts({ chartHeight, data }: chartProps) {
 
   return (
     <ResponsiveContainer width="100%" height={chartHeight}>

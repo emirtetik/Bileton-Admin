@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -9,20 +8,20 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import getChartsData from "../../../services/services";
 
-interface chartHeightProps {
+interface chartProps {
   chartHeight: number;
+  data:chartDataProps[]
 }
-export default function LineCharts ({chartHeight}:chartHeightProps) {
-  const chartsDataUrl: string = "data.json";
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.lineChartsData);
-    });
-  }, []);
+
+interface chartDataProps {
+  name:string,
+  uv:number,
+  pv:number,
+  amt:number
+}
+export default function LineCharts ({ chartHeight, data }: chartProps) {
+ 
     return (
       <ResponsiveContainer width="100%" height={chartHeight}>
         <LineChart

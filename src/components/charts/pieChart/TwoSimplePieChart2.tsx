@@ -1,19 +1,15 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
-import getChartsData from "../../../services/services";
-import { useEffect, useState } from "react";
 
-interface chartHeightProps {
+interface chartProps {
   chartHeight: number;
+  data: chartDataProps[];
 }
-export default function TwoSimplePieChart2({ chartHeight }: chartHeightProps) {
-  const chartsDataUrl: string = "data.json";
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
-      setData(res.data.twoSimplePieChart2Data);
-    });
-  }, []);
+
+interface chartDataProps {
+  name: string;
+  value: number;
+}
+export default function TwoSimplePieChart2({ chartHeight, data }: chartProps) {
   return (
     <ResponsiveContainer width="100%" height={chartHeight}>
       <PieChart width={400} height={400}>
@@ -22,8 +18,8 @@ export default function TwoSimplePieChart2({ chartHeight }: chartHeightProps) {
           isAnimationActive={true}
           //@ts-ignore
           data={data}
-          cx='50%'
-          cy='50%'
+          cx="50%"
+          cy="50%"
           innerRadius={60}
           outerRadius={100}
           fill="#EE731E"
