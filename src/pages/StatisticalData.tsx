@@ -24,8 +24,8 @@ export default function StatisticalData() {
     twoLevelPieChartData2: [],
     pieChartWithCustomizedLabelData: [],
     customActiveShapePieChartData: [],
-    straightAnglePieChartData:[],
-    twoSimplePieChart1Data:[]
+    straightAnglePieChartData: [],
+    twoSimplePieChart1Data: [],
     // Diğer veriler
   });
   useEffect(() => {
@@ -44,30 +44,15 @@ export default function StatisticalData() {
         <div className="mb-5">
           <h1 className="text-xl font-semibold text-center mb-5">Area Chart</h1>
 
-          <AreaCharts
-            chartHeight={chartHeight}
-            data={
-              data.areaChartsData
-            }
-          />
+          <AreaCharts chartHeight={chartHeight} data={data.areaChartsData} />
         </div>
         <div className="mb-5">
           <h1 className="text-xl font-semibold text-center mb-5">Bar Chart</h1>
-          <BarCharts
-            chartHeight={chartHeight}
-            data={
-              data.barChartsData
-            }
-          />
+          <BarCharts chartHeight={chartHeight} data={data.barChartsData} />
         </div>
         <div className="mb-5">
           <h1 className="text-xl font-semibold text-center mb-5">Line Chart</h1>
-          <LineCharts
-            chartHeight={chartHeight}
-            data={
-              data.lineChartsData
-            }
-          />
+          <LineCharts chartHeight={chartHeight} data={data.lineChartsData} />
         </div>
         <div className="mb-5">
           <h1 className="text-xl font-semibold text-center mb-5">
@@ -75,9 +60,7 @@ export default function StatisticalData() {
           </h1>
           <RadialBarCharts
             chartHeight={chartHeight}
-            data={
-              data.radialBarChartsData
-            }
+            data={data.radialBarChartsData}
           />
         </div>
         <div className="mb-5">
@@ -86,9 +69,7 @@ export default function StatisticalData() {
           </h1>
           <CustomActiveShapePieChart
             chartHeight={chartHeight}
-            data={
-              data.customActiveShapePieChartData
-            }
+            data={data.customActiveShapePieChartData}
           />
         </div>
         <div className="mb-5">
@@ -106,9 +87,7 @@ export default function StatisticalData() {
           </h1>
           <StraightAnglePieChart
             chartHeight={chartHeight}
-            data={
-              data.straightAnglePieChartData
-            }
+            data={data.straightAnglePieChartData}
           />
         </div>
         <div className="mb-5">
@@ -127,9 +106,7 @@ export default function StatisticalData() {
           </h1>
           <TwoSimplePieChart
             chartHeight={chartHeight}
-            data={
-              data.twoSimplePieChart1Data
-            }
+            data={data.twoSimplePieChart1Data}
           />
         </div>
         <div className="mb-5">
