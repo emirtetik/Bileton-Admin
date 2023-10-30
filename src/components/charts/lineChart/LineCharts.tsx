@@ -27,7 +27,7 @@ export default function LineCharts ({ chartHeight, data }: chartProps) {
         <LineChart
           width={500}
           height={300}
-          //@ts-ignore
+         
           data={data}
           margin={{
             top: 5,

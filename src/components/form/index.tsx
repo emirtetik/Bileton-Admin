@@ -1,17 +1,17 @@
-import React from "react";
 
 export default function Form() {
   return (
-    <div className="ml-16 max-w-7xl rounded-lg shadow-md p-4 border">
-      <form action="#">
+    <div className="p-4 bg-black border rounded-lg shadow-md ">
+      
+      <form action="#"> 
         <div className="flex justify-between">
-          <label htmlFor="category" className="font-bold">
+          <label htmlFor="category" className="font-bold ">
             Etkinlik Kategorisini Seciniz :
           </label>
           <select
             name="category"
             id="category"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           >
             <option value="music">Muzik</option>
             <option value="theatre">Tiyatro</option>
@@ -27,10 +27,10 @@ export default function Form() {
             type="text"
             name="name"
             id="name"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           />
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <label htmlFor="salesDateTicket" className="font-bold">
             Bilet Satis Tarihlerini Seciniz :
           </label>
@@ -38,7 +38,7 @@ export default function Form() {
             type="date"
             name="salesDateTicket"
             id="salesDateTicket"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           />
         </div>
         <div className="flex justify-between">
@@ -49,7 +49,7 @@ export default function Form() {
             type="date"
             name="activityDate"
             id="activityDate"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           />
         </div>
         <div className="flex justify-between">
@@ -59,7 +59,7 @@ export default function Form() {
           <select
             name="city"
             id="city"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           >
             <option value="Istanbul">Istanbul</option>
             <option value="Ankara">Ankara</option>
@@ -73,7 +73,7 @@ export default function Form() {
           <select
             name="city"
             id="city"
-            className="p-2 mb-4 rounded border w-3/4"
+            className="w-3/4 p-2 mb-4 text-black border rounded"
           >
             <option value="Erciyes Üniversitesi Marianne Molu Anfisi ">
               Erciyes Üniversitesi Marianne Molu Anfisi{" "}
@@ -94,7 +94,7 @@ export default function Form() {
             name="submit"
             id="submit"
             value="Urunu Ekle"
-            className="justify-self-end text-lg text-slate-300 border-collapse border-2 border-slate-300 p-1 rounded-md bg-white font-bold hover:bg-white hover:border-orange-500 hover:text-orange-500"
+            className="p-1 text-lg font-bold text-black bg-white border-2 border-collapse rounded-md justify-self-end border-slate-300 hover:bg-white hover:border-orange-500 hover:text-orange-500"
           />
         </div>
       </form>

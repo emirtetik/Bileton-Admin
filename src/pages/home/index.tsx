@@ -1,12 +1,8 @@
-import Sidebar from "../../components/sidebar/Sidebar";
 
 const Home = () => {
   return (
-    <div className="flex">
-        <Sidebar />
-      <div className="w-3/4">
+    <div className="ml-16">
         <h1>Anasayfa</h1>
-      </div>
     </div>
   );
 };

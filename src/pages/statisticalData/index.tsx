@@ -1,16 +1,15 @@
-import Sidebar from "../components/sidebar/Sidebar";
-import AreaCharts from "../components/charts/areaChart/AreaCharts";
-import BarCharts from "../components/charts/barChart/BarCharts";
-import LineCharts from "../components/charts/lineChart/LineCharts";
-import RadialBarCharts from "../components/charts/radialBarChart/RadialBarCharts";
-import CustomActiveShapePieChart from "../components/charts/pieChart/CustomActiveShapePieChart";
-import PieChartWithCustomizedLabel from "../components/charts/pieChart/PieChartWithCustomizedLabel";
-import StraightAnglePieChart from "../components/charts/pieChart/StraightAnglePieChart";
-import TwoLevelPieChart from "../components/charts/pieChart/TwoLevelPieChart";
-import TwoSimplePieChart from "../components/charts/pieChart/TwoSimplePieChart";
-import TwoSimplePieChart2 from "../components/charts/pieChart/TwoSimplePieChart2";
+import AreaCharts from "../../components/charts/areaChart/AreaCharts";
+import BarCharts from "../../components/charts/barChart/BarCharts";
+import LineCharts from "../../components/charts/lineChart/LineCharts";
+import RadialBarCharts from "../../components/charts/radialBarChart/RadialBarCharts";
+import CustomActiveShapePieChart from "../../components/charts/pieChart/CustomActiveShapePieChart";
+import PieChartWithCustomizedLabel from "../../components/charts/pieChart/PieChartWithCustomizedLabel";
+import StraightAnglePieChart from "../../components/charts/pieChart/StraightAnglePieChart";
+import TwoLevelPieChart from "../../components/charts/pieChart/TwoLevelPieChart";
+import TwoSimplePieChart from "../../components/charts/pieChart/TwoSimplePieChart";
+import TwoSimplePieChart2 from "../../components/charts/pieChart/TwoSimplePieChart2";
 import { useEffect, useState } from "react";
-import getChartsData from "../services/services";
+import getChartsData from "../../services/services";
 
 export default function StatisticalData() {
   const chartsDataUrl: string = "data.json";
@@ -26,36 +25,33 @@ export default function StatisticalData() {
     customActiveShapePieChartData: [],
     straightAnglePieChartData: [],
     twoSimplePieChart1Data: [],
-    // Diğer veriler
   });
   useEffect(() => {
     getChartsData(chartsDataUrl).then((res) => {
-      //@ts-ignore
       setData(res.data);
     });
   }, []);
 
-  var chartHeight = 350;
+  const chartHeight = 350;
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="w-3/4 grid grid-cols-2 pt-10">
+    <div className="max-w-6xl mx-auto -z-10">
+      <div className="grid grid-cols-2 pt-10">
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">Area Chart</h1>
+          <h1 className="mb-5 text-xl font-semibold text-center">Area Chart</h1>
 
           <AreaCharts chartHeight={chartHeight} data={data.areaChartsData} />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">Bar Chart</h1>
+          <h1 className="mb-5 text-xl font-semibold text-center">Bar Chart</h1>
           <BarCharts chartHeight={chartHeight} data={data.barChartsData} />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">Line Chart</h1>
+          <h1 className="mb-5 text-xl font-semibold text-center">Line Chart</h1>
           <LineCharts chartHeight={chartHeight} data={data.lineChartsData} />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Radial Bar Chart
           </h1>
           <RadialBarCharts
@@ -64,7 +60,7 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Custom Active Shape Pie Chart Chart
           </h1>
           <CustomActiveShapePieChart
@@ -73,7 +69,7 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Pie Chart With Customized Label Chart
           </h1>
           <PieChartWithCustomizedLabel
@@ -82,7 +78,7 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Straight Angle Pie Chart
           </h1>
           <StraightAnglePieChart
@@ -91,7 +87,7 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Two Level Pie Chart
           </h1>
           <TwoLevelPieChart
@@ -101,7 +97,7 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Two Simple Pie Chart
           </h1>
           <TwoSimplePieChart
@@ -110,13 +106,12 @@ export default function StatisticalData() {
           />
         </div>
         <div className="mb-5">
-          <h1 className="text-xl font-semibold text-center mb-5">
+          <h1 className="mb-5 text-xl font-semibold text-center">
             Two Simple Pie Chart 2
           </h1>
           <TwoSimplePieChart2
             chartHeight={chartHeight}
             data={
-              //@ts-ignore
               data.twoSimplePieChart2Data
             }
           />

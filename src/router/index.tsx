@@ -1,31 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/home";
-import AddTicket from "../pages/addTicket";
-import UpdateDeleteTicket from "../pages/UpdateDeleteTicket";
 import StatisticalData from "../pages/statisticalData";
-import NotFound from "../pages/NotFound";
+import NotFound from "../pages/notFound";
+import MainMenu from "../layout/main";
 
 const routes = createBrowserRouter([
-    {
-        path:'/',
-        element: <Home/>
-    },
-    {
-        path:'/addTicket',
-        element:<AddTicket/>
-    },
-    {
-        path:'/updateDeleteTicket',
-        element:<UpdateDeleteTicket/>
-    },
-    {
-        path:'/statisticalData',
-        element:<StatisticalData/>
-    },
-    {
-        path:'*',
-        element:<NotFound/>
-    }
-])
+  {
+    path: "/",
+    element: <MainMenu />,
+    children: [
+      { index: true, element: <Home /> },
+      {
+        path: "/statisticalData",
+        element: <StatisticalData />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
 
-export default routes
+export default routes;
