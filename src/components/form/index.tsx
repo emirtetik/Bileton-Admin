@@ -1,9 +1,10 @@
+import MuiButton from "../mui/button";
 
 export default function Form() {
+
   return (
     <div className="p-4 bg-black border rounded-lg shadow-md ">
-      
-      <form action="#"> 
+      <form action="#">
         <div className="flex justify-between">
           <label htmlFor="category" className="font-bold ">
             Etkinlik Kategorisini Seciniz :
@@ -89,13 +90,14 @@ export default function Form() {
           </select>
         </div>
         <div className="grid justify-items-stretch ">
-          <input
+          <MuiButton
             type="submit"
-            name="submit"
-            id="submit"
-            value="Urunu Ekle"
-            className="p-1 text-lg font-bold text-black bg-white border-2 border-collapse rounded-md justify-self-end border-slate-300 hover:bg-white hover:border-orange-500 hover:text-orange-500"
-          />
+            size="small"
+            variant="contained"
+            sx={{borderRadius: '30px', width:"20%",justifySelf:"end",border:"1px solid white",fontWeight:"bold"}}
+          >
+            Ürün ekle
+          </MuiButton>
         </div>
       </form>
     </div>
