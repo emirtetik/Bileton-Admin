@@ -19,11 +19,10 @@ const MuiButton: React.FC<MuiButtonProps> = ({
   switch (variant) {
     case "text":
       sx = {
-        px: 4,
-        py: 2,
-        fontWeight: "bold",
-        color: "white",
-        backgroundColor: "yellow",
+        px: 2,
+        py: 1,
+        color: "#454545",
+        backgroundColor: "#FFA559",
         borderRadius: "default",
         "&:hover": { backgroundColor: "red" },
       };
@@ -41,13 +40,15 @@ const MuiButton: React.FC<MuiButtonProps> = ({
       break;
     case "outlined":
       sx = {
-        px: 4,
-        py: 2,
+        px: 0,
+        py: 0,
         fontWeight: "bold",
         color: "white",
-        backgroundColor: "red",
-        borderRadius: "default",
-        "&:hover": { backgroundColor: "red.700" },
+        backgroundColor: "transparent",
+        border:"none",
+        '&.MuiButton-outlined': {
+          border: 'none',
+        },
       };
       break;
   }

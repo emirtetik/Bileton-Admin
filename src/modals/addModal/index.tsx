@@ -1,21 +1,23 @@
-import Form from "../../components/form"
-
-interface AddModalProps{
-    closeModal: () => void;
+import Form from "../../components/form";
+import MuiButton from "../../components/mui/button";
+import { GrClose } from "react-icons/gr";
+interface AddModalProps {
+  closeModal: () => void;
 }
 
 const AddModal = ({closeModal} : AddModalProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/70">
-       <div className="">
-       <h1 className="py-4 my-10 text-xl font-extrabold text-center uppercase bg-orange-500">
-          Yeni Bir Etkinlik Ekle
-        </h1>
-        <Form />
+    <div className="fixed inset-0 z-50 flex items-start justify-end p-6 bg-black/70">
+       <div className="absolute inset-0 flex flex-col items-center justify-center">
+         <div className="">
+          
+            <Form />
+         </div>
        </div>
-        <button onClick={closeModal}>Kapat</button>
+        <MuiButton size="medium" variant="outlined" onClick={closeModal}><GrClose className="w-8 h-8"/></MuiButton>
     </div>
   )
 }
 
-export default AddModal
+
+export default AddModal;

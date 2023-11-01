@@ -1,4 +1,4 @@
-import List from "../list/List";
+import List from "./list/menu";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import { GrUserAdmin } from "react-icons/gr";
 interface SideBarProps {
@@ -10,6 +10,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   const pagesList = {
     addTicket: "addTicket",
     statisticalData: "statisticalData",
+    home:"/"
   };
 
   return (

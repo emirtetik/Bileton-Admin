@@ -1,8 +1,11 @@
+import ListEvent from "../../components/event/ListEvents";
 
 const Home = () => {
   return (
-    <div className="ml-16">
-        <h1>Anasayfa</h1>
+    <div className=" flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center">
+         <ListEvent/>
+         </div>
     </div>
   );
 };
