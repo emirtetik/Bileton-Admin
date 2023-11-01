@@ -1,26 +1,55 @@
 import MuiButton from "../mui/button";
 import React, { useState } from "react";
-import {useQuery} from 'react-query'
-import axios from "axios";
+import { useQuery } from "react-query";
 import { CategoryService } from "../../services/CategoryService";
+import { EventService } from "../../services/EventServices";
+
 type Category = {
   id: string;
   name: string;
 };
-const fetcher = () => {return CategoryService.getAll()}
-export default function Form() {
-   const {data, isLoading,error} = useQuery('categories', fetcher)
+type CityProps = {
+  id: string;
+  name: string;
+};
+const cityFetch = () => {
+  return EventService.getAll();
+};
+const fetcher = () => {
+  return CategoryService.getAll();
+};
 
+export default function Form() {
+  const {
+    data: categoryData,
+    isLoading: categoryIsLoading,
+    error: categoryError,
+  } = useQuery("categories", fetcher);
+  const {
+    data: cityData,
+    isLoading: cityIsLoading,
+    error: cityError,
+  } = useQuery("city", cityFetch);
   const [category, setCategory] = useState("");
   const [eventName, setEventName] = useState("");
-  const [ticketSaleDates, setTicketSaleDates] = useState("");
+  const [ticketSaleStartDate, setTicketSaleStartDate] = useState("");
+  const [ticketSaleEndDate, setTicketSaleEndDate] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [city, setCity] = useState("");
   const [venue, setVenue] = useState("");
- if (isLoading) {
+  const [description, setDescription] = useState("");
+
+
+  if (categoryIsLoading) {
     return <div>Loading...</div>;
   }
-  if (error) {
+  if (categoryError) {
+    return <div>Error</div>;
+  }
+  if (cityIsLoading) {
+    return <div>Loading...</div>;
+  }
+  if (cityError) {
     return <div>Error</div>;
   }
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,60 +57,77 @@ export default function Form() {
     const eventData = {
       category,
       eventName,
-      ticketSaleDates,
+      ticketSaleStartDate,
+      ticketSaleEndDate,
       eventDate,
       city,
       venue,
+      description
     };
-  
+
     console.log(eventData);
-  
     try {
-      const response = await axios.post('API_URL', eventData);
-      console.log(response.data);
+      const response = await EventService.add(eventData);
+      console.log("başarılı", response);
     } catch (error) {
-      console.error(error);
+      console.log("hata", error);
     }
   };
   return (
-    <div className="flex-col p-4 mx-auto bg-black border rounded-lg shadow-md lex md:flex-row">
+    <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
+      
+       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white  bg-fourth rounded-lg">
+              Yeni Bir Etkinlik Ekle
+            </h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinlik Kategorisini Seciniz:</label>
+          <label>Etkinlik Kategorisi:</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="text-black border rounded-lg "
+            className="text-black border-2 border-secondary rounded-lg "
           >
-            {data?.map((category:Category) => (
-              <option key={category.id} value={category.id} className="text-black">
+            {categoryData?.map((category: Category) => (
+              <option
+                key={category.id}
+                value={category.id}
+                className=""
+              >
                 {category.name}
               </option>
             ))}
           </select>
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinligin Adini Giriniz:</label>
+          <label>Etkinligin Adi:</label>
 
           <input
             type="text"
             value={eventName}
             onChange={(e) => setEventName(e.target.value)}
-            className="text-black border rounded-lg "
-
+            className="text-black border-2 border-secondary rounded-lg  "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Bilet Satis Tarihlerini Seciniz: </label>
+          <label>Bilet Satış Başlangıç Tarihi: </label>
           <input
             type="date"
-            value={ticketSaleDates}
-            onChange={(e) => setTicketSaleDates(e.target.value)}
-            className="text-black border rounded-lg "
+            value={ticketSaleStartDate}
+            onChange={(e) => setTicketSaleStartDate(e.target.value)}
+            className="text-black border-2 border-secondary rounded-lg "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinligin Tarihini Giriniz:</label>
+          <label>Bilet Satış Bitiş Tarihi: </label>
+          <input
+            type="date"
+            value={ticketSaleEndDate}
+            onChange={(e) => setTicketSaleEndDate(e.target.value)}
+            className="text-black border-2 border-secondary rounded-lg "
+          />
+        </div>
+        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+          <label>Etkinligin Tarihi:</label>
           <input
             type="date"
             value={eventDate}
@@ -90,23 +136,34 @@ export default function Form() {
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinligin Yapilacagi Ili Seciniz:</label>
-          <input
-            type="text"
+          <label>Şehri seçiniz:</label>
+          <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="text-black border rounded-lg "
-
-          />
+            className="text-black border-2 border-secondary rounded-lg "
+          >
+            {cityData?.map((city: CityProps) => (
+              <option key={city.id} value={city.id} className="text-black">
+                {city.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkingilin Yapilacagi mekanı seçiniz:</label>
+          <label> Mekanı seçiniz:</label>
           <input
             type="text"
             value={venue}
             onChange={(e) => setVenue(e.target.value)}
-            className="text-black border rounded-lg "
-
+            className="text-black border-2 border-secondary rounded-lg "
+          />
+        </div>
+        <div className="grid items-start  mb-4 space-x-0 md:space-x-4 md:flex-row">
+          <label> Etkinlik açıklama:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="text-black border-2 border-secondary rounded-lg h-[150px] "
           />
         </div>
         <div className="grid justify-items-stretch ">
