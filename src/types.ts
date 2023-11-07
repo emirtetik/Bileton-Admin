@@ -4,9 +4,13 @@ export interface event {
     _id: string;
     image: string;
     name: string;
+    startDate: string;
+    eventDate: string;
     description: string;
-    date: string;
+    endDate: string;
+    venue: string;
+    city: string;
     location: string | [number,number];
-    status: string;
+    status: boolean;
     category: string;
 }

@@ -32,13 +32,12 @@ export default function Form() {
   } = useQuery("city", cityFetch);
   const [category, setCategory] = useState("");
   const [eventName, setEventName] = useState("");
-  const [ticketSaleStartDate, setTicketSaleStartDate] = useState("");
-  const [ticketSaleEndDate, setTicketSaleEndDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [city, setCity] = useState("");
   const [venue, setVenue] = useState("");
   const [description, setDescription] = useState("");
-
 
   if (categoryIsLoading) {
     return <div>Loading...</div>;
@@ -57,12 +56,12 @@ export default function Form() {
     const eventData = {
       category,
       eventName,
-      ticketSaleStartDate,
-      ticketSaleEndDate,
+      startDate,
+      endDate,
       eventDate,
       city,
       venue,
-      description
+      description,
     };
 
     console.log(eventData);
@@ -75,10 +74,9 @@ export default function Form() {
   };
   return (
     <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
-      
-       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white  bg-fourth rounded-lg">
-              Yeni Bir Etkinlik Ekle
-            </h1>
+      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white  bg-fourth rounded-lg">
+        Yeni Bir Etkinlik Ekle
+      </h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label>Etkinlik Kategorisi:</label>
@@ -88,11 +86,7 @@ export default function Form() {
             className="text-black border-2 border-secondary rounded-lg "
           >
             {categoryData?.map((category: Category) => (
-              <option
-                key={category.id}
-                value={category.id}
-                className=""
-              >
+              <option key={category.id} value={category.id} className="">
                 {category.name}
               </option>
             ))}
@@ -112,8 +106,8 @@ export default function Form() {
           <label>Bilet Satış Başlangıç Tarihi: </label>
           <input
             type="date"
-            value={ticketSaleStartDate}
-            onChange={(e) => setTicketSaleStartDate(e.target.value)}
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
             className="text-black border-2 border-secondary rounded-lg "
           />
         </div>
@@ -121,8 +115,8 @@ export default function Form() {
           <label>Bilet Satış Bitiş Tarihi: </label>
           <input
             type="date"
-            value={ticketSaleEndDate}
-            onChange={(e) => setTicketSaleEndDate(e.target.value)}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             className="text-black border-2 border-secondary rounded-lg "
           />
         </div>
@@ -136,18 +130,13 @@ export default function Form() {
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Şehri seçiniz:</label>
-          <select
+          <label> Sehir seçiniz:</label>
+          <input
+            type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             className="text-black border-2 border-secondary rounded-lg "
-          >
-            {cityData?.map((city: CityProps) => (
-              <option key={city.id} value={city.id} className="text-black">
-                {city.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label> Mekanı seçiniz:</label>
