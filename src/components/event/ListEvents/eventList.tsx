@@ -1,19 +1,11 @@
 import EventRow from "./eventRow";
 import { useState } from "react";
 import MuiButton from "../../mui/button";
-import {TbPlayerTrackPrevFilled,TbPlayerTrackNextFilled,} from "react-icons/tb";
-
-interface event {
-    id: string;
-    image: string;
-    name: string;
-    description: string;
-    date: string;
-    location: string | [number,number];
-    status: string;
-    category: string;
-    unitsInStock:number
-}
+import {
+  TbPlayerTrackPrevFilled,
+  TbPlayerTrackNextFilled,
+} from "react-icons/tb";
+import { event } from "../../../types";
 
 const EventList = (props: {
   events: event[];
@@ -50,7 +42,7 @@ const EventList = (props: {
                 {props.events
                   .slice(page - 1, page + 5)
                   .map((event: event, i: number) => (
-                      <EventRow {...event}  key={i}  />
+                    <EventRow {...event} key={i} />
                   ))}
               </tbody>
             </table>
@@ -72,7 +64,7 @@ const EventList = (props: {
                     }
                   }}
                 >
-                  <TbPlayerTrackPrevFilled  className="w-8 h-8 text-black"/>
+                  <TbPlayerTrackPrevFilled className="w-8 h-8 text-black" />
                 </MuiButton>
                 <MuiButton
                   size="small"
@@ -83,7 +75,7 @@ const EventList = (props: {
                     }
                   }}
                 >
-                  <TbPlayerTrackNextFilled className="w-8 h-8 text-black"/>
+                  <TbPlayerTrackNextFilled className="w-8 h-8 text-black" />
                 </MuiButton>
               </div>
             </div>
