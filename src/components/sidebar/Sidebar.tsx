@@ -10,50 +10,41 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   const pagesList = {
     addTicket: "addTicket",
     statisticalData: "statisticalData",
-    home:"/"
+    home: "/",
   };
 
   return (
     <div
-      className={`flex flex-col sticky top-0  transition-all duration-500 ease-in-out  h-screen bg-gradient-to-l from-orange-500 to-gray-500 ${
+      className={`flex flex-col sticky top-0  transition-all duration-500 ease-in-out  h-screen bg-black ${
         isOpen ? "w-60" : "w-16"
       }`}
     >
       <div className="flex items-center justify-center mt-10">
         <div className="flex items-center mb-16">
-        {isOpen ? (
-            <>
-              <a href="/">
-                <img
-                  src="../../src/images/admin.png"
-                  alt="Admin Photo"
-                  className="w-16 rounded-full"
-                />
-              </a>
-              <a href="/">
-                <h2 className="ml-2 text-white">Admin Ad - Soyad</h2>
-              </a>
-            </>
+          {isOpen ? (
+            <div className="text-white text-3xl ">
+              <h2>Bileton</h2>
+            </div>
           ) : (
             <div className="flex">
-              <GrUserAdmin className="ml-2 w-7 h-7"/>
+              <GrUserAdmin className="ml-2 w-7 h-7" />
             </div>
           )}
         </div>
-          <div className="relative ">
-            <div className="absolute top-5 left-1">
-              <button onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? (
-                  <BsArrowLeftCircle className=" w-7 h-7" />
-                ) : (
-                  <BsArrowRightCircle className="w-7 h-7" />
-                )}
-              </button>
-            </div>
+        <div className=" ">
+          <div className="absolute text-white top-5 left-1">
+            <button onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? (
+                <BsArrowLeftCircle className="ml-2 w-7 h-7" />
+              ) : (
+                <BsArrowRightCircle className="ml-2 w-7 h-7" />
+              )}
+            </button>
           </div>
         </div>
+      </div>
 
-        <List pagesList={pagesList} isOpen={isOpen} />
+      <List pagesList={pagesList} isOpen={isOpen} />
     </div>
   );
 };

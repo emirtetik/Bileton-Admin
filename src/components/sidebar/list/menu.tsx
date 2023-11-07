@@ -17,18 +17,18 @@ interface ListProps {
 export default function Menu({ pagesList, isOpen }: ListProps) {
   const [showModal, setShowModal] = useState(false);
   return (
-    <div className="flex items-center justify-center">
-      <ul className="text-xl font-semibold text-white list-none">
+    <div className="w-full flex items-center justify-center">
+      <ul className="w-full bg-transparent  font-bold font-raleway text-white ">
         {isOpen ? (
           <>
-            <li className="py-2">
+            <li className="my-2 pl-4 hover:bg-blue-800 ">
               <Link to={pagesList.home}>Anasayfa</Link>
             </li>
-            <li className="py-2">
+            <li className="my-2 pl-4 hover:bg-blue-800">
               <button onClick={() => setShowModal(true)}>Etkinlik Ekle</button>
               {showModal && <AddModal closeModal={() => setShowModal(false)} />}
             </li>
-            <li className="py-2">
+            <li className="my-2 pl-4 hover:bg-blue-800">
               <Link to={pagesList.statisticalData}>İstatistik Veriler</Link>
             </li>
           </>
