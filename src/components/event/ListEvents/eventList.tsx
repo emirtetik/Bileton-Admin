@@ -1,87 +1,84 @@
-import EventRow from "./eventRow";
-import { useState } from "react";
-import MuiButton from "../../mui/button";
-import {
-  TbPlayerTrackPrevFilled,
-  TbPlayerTrackNextFilled,
-} from "react-icons/tb";
+import Moment from "react-moment";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { event } from "../../../types";
+import { Link } from "react-router-dom";
+
+const columns: GridColDef[] = [
+  {
+    field: "date",
+    headerName: "Date",
+    width: 150,
+
+    renderCell: (params) => (
+      <h3 className="whitespace-no-wrap text-fourth">
+        <Moment format="YYYY/MM/DD">{params.row.eventDate}</Moment>
+      </h3>
+    ),
+  },
+  {
+    field: "name",
+    headerName: "Event",
+    width: 400,
+    renderCell: (params) => (
+      <Link to={`/event/${params.row.name}-${params.row._id}`}>
+        <div className="flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10">
+            <img
+              className="object-cover w-full h-full rounded-md"
+              src={params.row.image}
+              alt=""
+            />
+          </div>
+
+          <h3 className="pl-3 whitespace-no-wrap text-fourth">
+            {params.row.name}
+          </h3>
+        </div>
+      </Link>
+    ),
+  },
+  {
+    field: "location",
+    headerName: "Location",
+    width: 200,
+    renderCell: (params) => (
+      <h3 className="whitespace-no-wrap text-fourth">{params.row.location}</h3>
+    ),
+  },
+  {
+    field: "category",
+    headerName: "Category",
+    width: 200,
+    renderCell: (params) => (
+      <h3 className="whitespace-no-wrap text-fourth">{params.row.category}</h3>
+    ),
+  },
+];
 
 const EventList = (props: {
   events: event[];
   isLoading: boolean;
   error: unknown;
 }) => {
-  const [page, setPage] = useState(1);
+  const rows = props.events;
 
   if (props.error) return <div>failed to load</div>;
   if (props.isLoading) return <div>loading...</div>;
+  if (props.events.length === 0)
+    return <div className="text-center">No events found</div>;
   return (
-    <div className="w-full max-w-6xl mx-auto rounded-md font-raleway ">
-      <div>
-        <div className="py-2 overflow-x-auto ">
-          <div className="inline-block min-w-full overflow-hidden shadow-dark ">
-            <table className="w-full leading-normal bg-third rounded-2xl table-fixed">
-              <thead>
-                <tr>
-                  <th className="px-5 py-3 tracking-wider text-left border-b-4 text-fourth border-fifth  ">
-                    Date
-                  </th>
-                  <th className="px-5 py-3 tracking-wider text-left border-b-4 text-fourth border-fifth  truncate">
-                    Event
-                  </th>
-                  <th className="px-5 py-3 tracking-wider text-left border-b-4 text-fourth border-fifth">
-                    Location
-                  </th>
-                  <th className="px-5 py-3 tracking-wider text-left border-b-4 text-fourth border-fifth">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {props.events
-                  .slice(page - 1, page + 5)
-                  .map((event: event, i: number) => (
-                    <EventRow {...event} key={i} />
-                  ))}
-              </tbody>
-            </table>
-            <div className="flex flex-col items-center py-2 border-t-4 bg-third xs:flex-row xs:justify-between ">
-              <span className="text-md text-fourth xs:text-sm">
-                Showing {page} to{" "}
-                {page + 5 > props.events.length
-                  ? props.events.length
-                  : page + 5}{" "}
-                of {props.events.length}
-              </span>
-              <div className="inline-flex gap-3 mt-2 xs:mt-0">
-                <MuiButton
-                  size="small"
-                  variant="outlined"
-                  onClick={() => {
-                    if (page - 5 > 0) {
-                      setPage(page - 5);
-                    }
-                  }}
-                >
-                  <TbPlayerTrackPrevFilled className="w-8 h-8 text-black" />
-                </MuiButton>
-                <MuiButton
-                  size="small"
-                  variant="outlined"
-                  onClick={() => {
-                    if (page + 5 < props.events.length) {
-                      setPage(page + 5);
-                    }
-                  }}
-                >
-                  <TbPlayerTrackNextFilled className="w-8 h-8 text-black" />
-                </MuiButton>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="w-full">
+      <DataGrid
+        rows={rows}
+        getRowId={(row) => row._id.toString()}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+      />
     </div>
   );
 };

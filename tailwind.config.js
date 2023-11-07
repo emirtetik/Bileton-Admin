@@ -13,6 +13,7 @@ export default {
         bold: 500,
         extrabold: 700,
       },
+<<<<<<< HEAD
       boxShadow: {
         dark: "0 4px 6px 0 rgba(69, 69, 69, 0.7), 0 5px 15px rgba(69, 69, 69, 0.1); ",
         light:
@@ -24,6 +25,20 @@ export default {
         third: "#FFE6C7", //krem
         fourth: "#454545", //gri
         fifth: "#C4CCCC", // açık gri
+=======
+      boxShadow:{
+        'dark': '0 4px 6px 0 rgba(69, 69, 69, 0.7), 0 5px 15px rgba(69, 69, 69, 0.1) ',
+        'light':'0px 4px 4px rgba(196, 204, 204, 0.25), 0px 4px 4px rgba(196, 204, 204, 0.22)'
+      },
+      colors: {
+        dark: "rgba(0, 0, 0, 0.9)",
+        primary: "darkblue", 
+        secondary: "blue", 
+        third: "blue", 
+        fourth: "black",
+        fifth: "white", 
+        bgHover: "blue",
+>>>>>>> 6e1270811e2c798f332c57cf0a80aeb845918045
       },
     },
   },
