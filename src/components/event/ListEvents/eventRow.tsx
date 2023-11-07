@@ -1,54 +1,95 @@
-// import Moment from 'react-moment';
-
+import  { useState } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useMutation,useQueryClient } from 'react-query';
+import { styled } from '@mui/material/styles';
+import Moment from 'react-moment';
 import { EventService } from "../../../services/EventServices";
 import MuiButton from "../../mui/button";
 import { event } from "../../../types";
 
+const Alert = styled(MuiAlert)(({ theme }) => ({
+  '& .MuiAlert-icon': {
+    marginRight: theme.spacing(1),
+  },
+  '&.MuiAlert-standardError': {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+}));
+
 const EventRow = (props: event) => {
+
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(EventService.delete, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('events');
+    },
+  });
+
   const handleDelete = async () => {
     try {
-      await EventService.delete(props._id);
+      await mutation.mutateAsync(props._id);
     } catch (error) {
-      console.log("silme işlemi gerçekleşmedi", error);
+      setErrorMessage('Silme işlemi gerçekleşmedi.');
+      setIsErrorSnackbarOpen(true);
     }
   };
+ 
 
   return (
-    <tr className="w-full flex gap-1">
-      <td className="px-5  border border-fifth  text-sm  bg-white flex sm:min-w-[140px] md:min-w-[240px] lg:min-w-[280px]">
-        <div className="flex items-center justify-center ">
-          <div className="flex-shrink-0 w-10 h-10">
-            <img
-              className="w-full h-full rounded-md"
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-              alt=""
-            />
-          </div>
-          <div className="ml-3 ">
-            <p className="text-fourth font-bold   whitespace-no-wrap">
-              {props.name}
-            </p>
-          </div>
+    <>
+    <tr>
+    <td className="flex px-5 text-sm bg-white ">
+      <div className="flex items-center justify-center ">
+        <p className="whitespace-no-wrap text-fourth">
+        <Moment format="YYYY/MM/DD">{props.eventDate}</Moment>
+        </p>
+      </div>
+    </td>
+    <td className="flex px-5 text-sm bg-white ">
+      <div className="flex items-center justify-center">
+        <div className="flex-shrink-0 w-10 h-10">
+          <img
+            className="w-full h-full rounded-md"
+            src={props.image}
+            alt=""
+          />
         </div>
-      </td>
-      <td className="px-5 border border-fifth bg-white text-sm flex sm:min-w-[140px] md:min-w-[240px] lg:min-w-[280px]">
-        <div className="flex items-center justify-center">
-          <p className="text-fourth whitespace-no-wrap">Admin</p>
-        </div>
-      </td>
-      <td className="px-5  border border-fifth bg-white text-sm sm:min-w-[140px] md:min-w-[240px] lg:min-w-[280px]">
-        {/* <p className="text-fourth whitespace-no-wrap"><Moment format="DD/MM/YYYY">{props.date}</Moment></p> */}
-      </td>
-      <td className="px-5 py-4 border border-fifth bg-third text-sm sm:min-w-[140px] md:min-w-[240px] lg:min-w-[280px]  hover:bg-fourth hover:text-primary hover:font-bold">
-        <span className="relative inline-block px-3 py-1  text-white leading-tight">
-          <span aria-hidden className="absolute inset-0  opacity-50 "></span>
+
+        <p className="pl-3 font-bold whitespace-no-wrap text-fourth">
+          {props.name}
+        </p>
+      </div>
+    </td>
+    <td className="flex items-center px-5 text-sm bg-white">
+      <p className="whitespace-no-wrap text-fourth">{props.location}</p>
+    </td>
+    <td className="px-5 py-4 text-sm bg-white">
+      <p className="whitespace-no-wrap text-fourth">{props.category}</p>
+    </td>
+    <td>
+    <span className="relative inline-block px-3 py-1 leading-tight text-white">
           <MuiButton variant="text" size="medium" onClick={handleDelete}>
             Delete
           </MuiButton>
         </span>
-      </td>
-    </tr>
+    </td>
+  </tr>
+   <Snackbar
+   open={isErrorSnackbarOpen}
+   autoHideDuration={5000}
+   onClose={() => setIsErrorSnackbarOpen(false)}
+   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+ >
+   <Alert variant="filled" severity="error">
+     {errorMessage}
+   </Alert>
+ </Snackbar>
+ </>
   );
 };
-
 export default EventRow;
