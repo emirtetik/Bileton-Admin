@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { CategoryService } from "../../services/CategoryService";
 import { EventService } from "../../services/EventServices";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
 
 type Category = {
-  id: string;
-  name: string;
-};
-type CityProps = {
   id: string;
   name: string;
 };
@@ -19,17 +18,29 @@ const fetcher = () => {
   return CategoryService.getAll();
 };
 
+const Alert = styled(MuiAlert)(({ theme }) => ({
+  "& .MuiAlert-icon": {
+    marginRight: theme.spacing(1),
+  },
+  "&.MuiAlert-standardError": {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+}));
+
 export default function Form() {
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const {
     data: categoryData,
     isLoading: categoryIsLoading,
     error: categoryError,
   } = useQuery("categories", fetcher);
-  const {
-    data: cityData,
-    isLoading: cityIsLoading,
-    error: cityError,
-  } = useQuery("city", cityFetch);
+  const { isLoading: cityIsLoading, error: cityError } = useQuery(
+    "city",
+    cityFetch
+  );
   const [category, setCategory] = useState("");
   const [eventName, setEventName] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -70,11 +81,13 @@ export default function Form() {
       console.log("başarılı", response);
     } catch (error) {
       console.log("hata", error);
+      setErrorMessage("Ekleme işlemi gerçekleşmedi.");
+      setIsErrorSnackbarOpen(true);
     }
   };
   return (
     <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
-      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white  bg-fourth rounded-lg">
+      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-lg bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
       <form onSubmit={handleSubmit}>
@@ -83,7 +96,7 @@ export default function Form() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg "
+            className="text-black border-2 rounded-lg border-secondary "
           >
             {categoryData?.map((category: Category) => (
               <option key={category.id} value={category.id} className="">
@@ -99,7 +112,7 @@ export default function Form() {
             type="text"
             value={eventName}
             onChange={(e) => setEventName(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg  "
+            className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -108,7 +121,7 @@ export default function Form() {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg "
+            className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -117,7 +130,7 @@ export default function Form() {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg "
+            className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -135,7 +148,7 @@ export default function Form() {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg "
+            className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -144,10 +157,10 @@ export default function Form() {
             type="text"
             value={venue}
             onChange={(e) => setVenue(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg "
+            className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
-        <div className="grid items-start  mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="grid items-start mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label> Etkinlik açıklama:</label>
           <textarea
             value={description}
@@ -171,6 +184,16 @@ export default function Form() {
           </MuiButton>
         </div>
       </form>
+      <Snackbar
+        open={isErrorSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={() => setIsErrorSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert variant="filled" severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
