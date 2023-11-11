@@ -8,20 +8,20 @@ export const BaseService = {
     }
     return await response.json();
   },
-  post: async (path: string, data: unknown) => {
+  post: async (path: string, formData: unknown) => {
     const response = await fetch(BASE_API_URL + path, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        Accept: "multipart/form-data",
       },
-      body: JSON.stringify(data),
+      body: formData,
     });
     return await response.json();
   },
-  delete:async(path:string) => {
+  delete: async (path: string) => {
     const response = await fetch(BASE_API_URL + path, {
-      method:"DELETE",
-    })  
+      method: "DELETE",
+    });
     return await response.json();
-  }
-}
+  },
+};

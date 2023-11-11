@@ -5,19 +5,19 @@ interface AddModalProps {
   closeModal: () => void;
 }
 
-const AddModal = ({closeModal} : AddModalProps) => {
+const AddModal = ({ closeModal }: AddModalProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-end p-6 bg-black/70">
-       <div className="absolute inset-0 flex flex-col items-center justify-center">
-         <div className="">
-          
-            <Form />
-         </div>
-       </div>
-        <MuiButton size="medium" variant="outlined" onClick={closeModal}><GrClose className="w-8 h-8"/></MuiButton>
+    <div className="fixed inset-0 z-500 flex items-start justify-end p-6 bg-black/70">
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="">
+          <Form />
+        </div>
+      </div>
+      <MuiButton size="medium" variant="outlined" onClick={closeModal}>
+        <GrClose className="w-8 h-8" />
+      </MuiButton>
     </div>
-  )
-}
-
+  );
+};
 
 export default AddModal;
