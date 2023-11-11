@@ -22,8 +22,8 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
       <div className="flex items-center justify-center mt-10">
         <div className="flex items-center mb-16">
           {isOpen ? (
-            <div className="text-white text-3xl ">
-              <h2>Bileton</h2>
+            <div className="text-white text-3xl mt-10">
+              <h2>Bileton-Admin</h2>
             </div>
           ) : (
             <div className="flex">

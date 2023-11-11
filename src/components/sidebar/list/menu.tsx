@@ -28,13 +28,11 @@ export default function Menu({ pagesList, isOpen }: ListProps) {
               <button onClick={() => setShowModal(true)}>Etkinlik Ekle</button>
               {showModal && <AddModal closeModal={() => setShowModal(false)} />}
             </li>
-            <li className="my-2 pl-4 hover:bg-blue-800">
-              <Link to={pagesList.statisticalData}>İstatistik Veriler</Link>
-            </li>
+           
           </>
         ) : (
           <div>
-            <div>
+            <div className="flex flex-col gap-5 items-center justify-center">
               <BiCommentAdd className="w-7 h-7" />
               <FcStatistics className="w-7 h-7" />
             </div>
