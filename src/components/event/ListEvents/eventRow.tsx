@@ -1,31 +1,32 @@
+
 import  { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useMutation,useQueryClient } from 'react-query';
 import { styled } from '@mui/material/styles';
+
 import { EventService } from "../../../services/EventServices";
 import MuiButton from "../../mui/button";
 import { event } from "../../../types";
 
 const Alert = styled(MuiAlert)(({ theme }) => ({
-  '& .MuiAlert-icon': {
+  "& .MuiAlert-icon": {
     marginRight: theme.spacing(1),
   },
-  '&.MuiAlert-standardError': {
+  "&.MuiAlert-standardError": {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
   },
 }));
 
 const EventRow = (props: event) => {
-
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const queryClient = useQueryClient();
   const mutation = useMutation(EventService.delete, {
     onSuccess: () => {
-      queryClient.invalidateQueries('events');
+      queryClient.invalidateQueries("events");
     },
   });
 
@@ -33,14 +34,14 @@ const EventRow = (props: event) => {
     try {
       await mutation.mutateAsync(props._id);
     } catch (error) {
-      setErrorMessage('Silme işlemi gerçekleşmedi.');
+      setErrorMessage("Silme işlemi gerçekleşmedi.");
       setIsErrorSnackbarOpen(true);
     }
   };
- 
 
   return (
     <>
+
     <tr>
     <td className="flex px-5 text-sm ">
       <div className="flex items-center justify-center ">
@@ -89,6 +90,7 @@ const EventRow = (props: event) => {
    </Alert>
  </Snackbar>
  </>
+
   );
 };
 export default EventRow;

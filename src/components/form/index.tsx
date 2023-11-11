@@ -49,6 +49,7 @@ export default function Form() {
   const [city, setCity] = useState("");
   const [venue, setVenue] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   if (categoryIsLoading) {
     return <div>Loading...</div>;
@@ -64,20 +65,26 @@ export default function Form() {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const eventData = {
-      category,
-      eventName,
-      startDate,
-      endDate,
-      eventDate,
-      city,
-      venue,
-      description,
-    };
+    const formData = new FormData();
 
-    console.log(eventData);
+    // Explicitly set the 'image' field as a File object
+    if (image !== null) {
+      formData.append("image", image);
+    }
+
+    formData.append("category", category);
+    formData.append("eventName", eventName);
+    formData.append("startDate", startDate);
+    formData.append("endDate", endDate);
+    formData.append("eventDate", eventDate);
+    formData.append("city", city);
+    formData.append("venue", venue);
+    formData.append("description", description);
+
+    console.log("this is form data", formData.get("image"));
+
     try {
-      const response = await EventService.add(eventData);
+      const response = await EventService.add(formData);
       console.log("başarılı", response);
     } catch (error) {
       console.log("hata", error);
@@ -85,6 +92,11 @@ export default function Form() {
       setIsErrorSnackbarOpen(true);
     }
   };
+  const setSelectedFile = (event) => {
+    setImage(event.target.files[0]);
+    console.log("this is image", event.target.files[0]);
+  };
+
   return (
     <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-lg bg-fourth">
@@ -115,6 +127,11 @@ export default function Form() {
             className="text-black border-2 rounded-lg border-secondary "
           />
         </div>
+        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+          <label>Image:</label>
+          <input type="file" name="image" onChange={setSelectedFile} />
+        </div>
+
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label>Bilet Satış Başlangıç Tarihi: </label>
           <input
