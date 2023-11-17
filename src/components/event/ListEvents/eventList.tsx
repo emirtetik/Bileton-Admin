@@ -1,5 +1,23 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { event } from "../../../types";
+import MuiButton from "../../mui/button";
+import { useState } from "react";
+import { EventService } from "../../../services/EventServices";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useMutation,useQueryClient } from 'react-query';
+import { styled } from '@mui/material/styles';
+
+
+const Alert = styled(MuiAlert)(({ theme }) => ({
+  "& .MuiAlert-icon": {
+    marginRight: theme.spacing(1),
+  },
+  "&.MuiAlert-standardError": {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+}));
 
 function uint8ArrayToBase64(uint8Array:any) {
   let binary = "";
@@ -8,7 +26,33 @@ function uint8ArrayToBase64(uint8Array:any) {
   });
   return btoa(binary);
 }
+
+const EventList = (props: {
+  events: event[];
+  isLoading: boolean;
+  error: unknown;
+}) => {
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(EventService.delete, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("events");
+    },
+  });
+
+  const handleDelete = async (_id: string) => {
+    try {
+      await mutation.mutateAsync(_id);
+    } catch (error) {
+      setErrorMessage("Silme işlemi gerçekleşmedi.");
+      setIsErrorSnackbarOpen(true);
+    }
+  };
+  
 const columns: GridColDef[] = [
+  
   {
     field: "date",
     headerName: "Date",
@@ -65,13 +109,16 @@ const columns: GridColDef[] = [
       <h3 className="whitespace-no-wrap text-black">{params.row.category}</h3>
     ),
   },
+  {
+    field: 'delete',
+    headerName: 'Delete',
+    width: 150,
+    renderCell: (params) => (
+      <MuiButton onClick={() => handleDelete(params.row._id)} variant={"text"} size={"small"}>Delete</MuiButton>
+    ),
+  },
 ];
 
-const EventList = (props: {
-  events: event[];
-  isLoading: boolean;
-  error: unknown;
-}) => {
   if (props.error) return <div>failed to load</div>;
   if (props.isLoading) return <div>loading...</div>;
   console.log(props.events);
@@ -79,7 +126,7 @@ const EventList = (props: {
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
   return (
-    <div className="w-full">
+    <div className="w-full bg-red-900 " style={{zIndex:"-10"}}>
          
       <DataGrid
         rows={rows}
@@ -92,8 +139,20 @@ const EventList = (props: {
         }}
         pageSizeOptions={[5, 10]}
       />
+      <Snackbar
+   open={isErrorSnackbarOpen}
+   autoHideDuration={5000}
+   onClose={() => setIsErrorSnackbarOpen(false)}
+   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+ >
+   <Alert variant="filled" severity="error">
+     {errorMessage}
+   </Alert>
+ </Snackbar>
     </div>
   );
 };
 
 export default EventList;
+
+

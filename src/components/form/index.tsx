@@ -92,13 +92,16 @@ export default function Form() {
       setIsErrorSnackbarOpen(true);
     }
   };
-  const setSelectedFile = (event:any) => {
+  const setSelectedFile = (event: any) => {
     setImage(event.target.files[0]);
     console.log("this is image", event.target.files[0]);
   };
 
   return (
-    <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-md shadow-md lex md:flex-row min-w-[600px]">
+    <div
+      className="flex-col p-4 mx-auto text-fourth bg-gray-400 border rounded-md shadow-md lex md:flex-row min-w-[900px] "
+      style={{ zIndex: "1000" }}
+    >
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
@@ -127,11 +130,7 @@ export default function Form() {
             className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Image:</label>
-          <input type="file" name="image" onChange={setSelectedFile} />
-        </div>
-
+       
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label>Bilet Satış Başlangıç Tarihi: </label>
           <input
@@ -176,6 +175,10 @@ export default function Form() {
             onChange={(e) => setVenue(e.target.value)}
             className="text-black border-2 rounded-md border-yellow-300 "
           />
+        </div>
+        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+          <label>Etkinlik için resim seçin:</label>
+          <input type="file" name="image" onChange={setSelectedFile} />
         </div>
         <div className="grid items-start mb-4 space-x-0 md:space-x-4 md:flex-row">
           <label> Etkinlik açıklama:</label>
