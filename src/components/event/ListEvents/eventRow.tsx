@@ -45,12 +45,12 @@ const EventRow = (props: event) => {
     <tr>
     <td className="flex px-5 text-sm ">
       <div className="flex items-center justify-center ">
-        <p className="whitespace-no-wrap text-fourth">
+        <p className="whitespace-no-wrap text-black">
         {new Date(props.eventDate).toLocaleDateString()}
         </p>
       </div>
     </td>
-    <td className="flex px-5 text-sm bg-white ">
+    <td className="flex px-5 text-sm bg-black ">
       <div className="flex items-center justify-center">
         <div className="flex-shrink-0 w-10 h-10">
           <img
@@ -60,16 +60,16 @@ const EventRow = (props: event) => {
           />
         </div>
 
-        <p className="pl-3 font-bold whitespace-no-wrap text-fourth">
+        <p className="pl-3 font-bold whitespace-no-wrap text-black">
           {props.name}
         </p>
       </div>
     </td>
     <td className="flex items-center px-5 text-sm bg-white">
-      <p className="whitespace-no-wrap text-fourth">{props.city}</p>
+      <p className="whitespace-no-wrap text-black">{props.city}</p>
     </td>
     <td className="px-5 py-4 text-sm bg-white">
-      <p className="whitespace-no-wrap text-fourth">{props.category}</p>
+      <p className="whitespace-no-wrap text-black">{props.category}</p>
     </td>
     <td>
     <span className="relative inline-block px-3 py-1 leading-tight text-black">

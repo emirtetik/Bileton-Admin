@@ -7,6 +7,6 @@ export const EventService = {
     return result;
   },
   get: async (id: string) => await BaseService.get("events/" + id),
-  add: async (data: unknown) => await BaseService.post("event", data),
+  add: async (data: BodyInit |null |undefined) => await BaseService.post("event", data),
   delete: async (id: string) => await BaseService.delete("event/" + id),
 };

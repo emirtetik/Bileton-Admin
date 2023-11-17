@@ -1,9 +1,9 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { event } from "../../../types";
 
-function uint8ArrayToBase64(uint8Array) {
+function uint8ArrayToBase64(uint8Array:any) {
   let binary = "";
-  uint8Array.forEach((byte) => {
+  uint8Array.forEach((byte:any) => {
     binary += String.fromCharCode(byte);
   });
   return btoa(binary);
@@ -43,7 +43,7 @@ const columns: GridColDef[] = [
             )}
           </div>
 
-          <h3 className="pl-3 whitespace-no-wrap text-fourth">
+          <h3 className="pl-3 whitespace-no-wrap text-black">
             {params.row.name}
           </h3>
         </div>
@@ -54,7 +54,7 @@ const columns: GridColDef[] = [
     headerName: "Location",
     width: 200,
     renderCell: (params) => (
-      <h3 className="whitespace-no-wrap text-fourth">{params.row.city}</h3>
+      <h3 className="whitespace-no-wrap text-black">{params.row.city}</h3>
     ),
   },
   {
@@ -62,7 +62,7 @@ const columns: GridColDef[] = [
     headerName: "Category",
     width: 200,
     renderCell: (params) => (
-      <h3 className="whitespace-no-wrap text-fourth">{params.row.category}</h3>
+      <h3 className="whitespace-no-wrap text-black">{params.row.category}</h3>
     ),
   },
 ];
@@ -80,6 +80,7 @@ const EventList = (props: {
     return <div className="text-center">No events found</div>;
   return (
     <div className="w-full">
+         
       <DataGrid
         rows={rows}
         getRowId={(row) => row._id.toString()}

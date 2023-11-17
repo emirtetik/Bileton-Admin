@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom"
 import Sidebar from "../../components/sidebar/Sidebar"
 
 const MainMenu = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="flex w-full ">
             <Sidebar  isOpen={isOpen} setIsOpen={setIsOpen}/>

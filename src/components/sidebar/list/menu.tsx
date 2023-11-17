@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { BiCommentAdd } from "react-icons/bi";
-import { FcStatistics } from "react-icons/fc";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import {IoHomeOutline  } from "react-icons/io5";
 import AddModal from "../../../modals/addModal";
 import { useState } from "react";
 type PagesListType = {
   addTicket: string;
-  statisticalData: string;
   home: string;
 };
 
@@ -33,8 +32,8 @@ export default function Menu({ pagesList, isOpen }: ListProps) {
         ) : (
           <div>
             <div className="flex flex-col gap-5 items-center justify-center">
-              <BiCommentAdd className="w-7 h-7" />
-              <FcStatistics className="w-7 h-7" />
+              <IoHomeOutline className="w-7 h-7" />
+              <IoIosAddCircleOutline  className="w-7 h-7"/>
             </div>
           </div>
         )}

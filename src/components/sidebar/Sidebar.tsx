@@ -9,7 +9,6 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   const pagesList = {
     addTicket: "addTicket",
-    statisticalData: "statisticalData",
     home: "/",
   };
 

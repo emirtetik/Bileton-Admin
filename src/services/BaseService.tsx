@@ -1,4 +1,4 @@
-const BASE_API_URL = "http://localhost:8080/api/event/";
+const BASE_API_URL = "https://event-api-tqwv.onrender.com/api/event/";
 
 export const BaseService = {
   get: async (path: string) => {
@@ -8,7 +8,7 @@ export const BaseService = {
     }
     return await response.json();
   },
-  post: async (path: string, formData: unknown) => {
+  post: async (path: string, formData: BodyInit | null | undefined) => {
     const response = await fetch(BASE_API_URL + path, {
       method: "POST",
       headers: {
