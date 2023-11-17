@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body{
-    @apply bg-gray-300 font-roboto 
+    @apply bg-yellow-300 font-roboto antialiased; 
 }

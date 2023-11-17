@@ -14,3 +14,10 @@ export interface event {
     status: boolean;
     category: string;
 }
+
+export type Account = {
+    id: number;
+    username: string;
+    fullname: string;
+    avatar: string;
+  };

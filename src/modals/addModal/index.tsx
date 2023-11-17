@@ -7,8 +7,8 @@ interface AddModalProps {
 
 const AddModal = ({ closeModal }: AddModalProps) => {
   return (
-    <div className="fixed inset-0 z-500 flex items-start justify-end p-6 bg-black/70">
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
+    <div className="fixed inset-0 z-500 flex items-start justify-end p-6 bg-black">
+      <div className="absolute inset-0 flex flex-col items-center justify-center ">
         <div className="">
           <Form />
         </div>

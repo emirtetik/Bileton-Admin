@@ -92,14 +92,14 @@ export default function Form() {
       setIsErrorSnackbarOpen(true);
     }
   };
-  const setSelectedFile = (event) => {
+  const setSelectedFile = (event:any) => {
     setImage(event.target.files[0]);
     console.log("this is image", event.target.files[0]);
   };
 
   return (
-    <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
-      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-lg bg-fourth">
+    <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-md shadow-md lex md:flex-row min-w-[600px]">
+      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
       <form onSubmit={handleSubmit}>
@@ -108,7 +108,7 @@ export default function Form() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           >
             {categoryData?.map((category: Category) => (
               <option key={category.id} value={category.id} className="">
@@ -124,7 +124,7 @@ export default function Form() {
             type="text"
             value={eventName}
             onChange={(e) => setEventName(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -138,7 +138,7 @@ export default function Form() {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -147,7 +147,7 @@ export default function Form() {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -156,7 +156,7 @@ export default function Form() {
             type="date"
             value={eventDate}
             onChange={(e) => setEventDate(e.target.value)}
-            className="text-black border rounded-lg "
+            className="text-black border rounded-md "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -165,7 +165,7 @@ export default function Form() {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -174,7 +174,7 @@ export default function Form() {
             type="text"
             value={venue}
             onChange={(e) => setVenue(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 rounded-md border-yellow-300 "
           />
         </div>
         <div className="grid items-start mb-4 space-x-0 md:space-x-4 md:flex-row">
@@ -182,7 +182,7 @@ export default function Form() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg h-[150px] "
+            className="text-black border-2 border-yellow-300 rounded-md h-[150px] "
           />
         </div>
         <div className="grid justify-items-stretch ">
