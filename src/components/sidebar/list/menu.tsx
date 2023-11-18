@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import {IoHomeOutline  } from "react-icons/io5";
-import AddModal from "../../../modals/addModal";
-import { useState } from "react";
 type PagesListType = {
   addTicket: string;
   home: string;
+  addEvent:string;
 };
 
 interface ListProps {
@@ -14,24 +13,22 @@ interface ListProps {
 }
 
 export default function Menu({ pagesList, isOpen }: ListProps) {
-  const [showModal, setShowModal] = useState(false);
   return (
-    <div className="w-full flex items-center justify-center">
-      <ul className="w-full bg-transparent  font-bold font-raleway text-white ">
+    <div className="flex items-center justify-center w-full">
+      <ul className="w-full p-3 font-bold text-white bg-transparent font-raleway">
         {isOpen ? (
           <>
-            <li className="my-2 pl-4 hover:bg-blue-800 ">
-              <Link to={pagesList.home}>Anasayfa</Link>
+            <li className="p-2 transition-colors rounded-lg hover:bg-yellow-900">
+              <Link to={pagesList.home}>Ana Sayfa</Link>
             </li>
-            <li className="my-2 pl-4 hover:bg-blue-800">
-              <button onClick={() => setShowModal(true)}>Etkinlik Ekle</button>
-              {showModal && <AddModal closeModal={() => setShowModal(false)} />}
+            <li className="p-2 transition-colors rounded-lg hover:bg-yellow-900">
+              <Link to={pagesList.addEvent}>Etkinlik Ekle</Link>
             </li>
            
           </>
         ) : (
           <div>
-            <div className="flex flex-col gap-5 items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-5">
               <IoHomeOutline className="w-7 h-7" />
               <IoIosAddCircleOutline  className="w-7 h-7"/>
             </div>
