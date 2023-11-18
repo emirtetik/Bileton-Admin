@@ -126,7 +126,8 @@ const columns: GridColDef[] = [
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
   return (
-    <div className="w-full bg-red-900 " style={{zIndex:"-10"}}>
+    <div className="w-full   " 
+     >
          
       <DataGrid
         rows={rows}
@@ -138,6 +139,7 @@ const columns: GridColDef[] = [
           },
         }}
         pageSizeOptions={[5, 10]}
+        className="  z-10  bg-red-900 "
       />
       <Snackbar
    open={isErrorSnackbarOpen}
