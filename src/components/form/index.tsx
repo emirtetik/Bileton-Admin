@@ -26,11 +26,19 @@ const Alert = styled(MuiAlert)(({ theme }) => ({
     backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
   },
+  "&.MuiAlert-standardSuccess": {
+    backgroundColor: theme.palette.success.main,
+    color: theme.palette.success.contrastText,
+  },
 }));
 
+
 export default function Form() {
-  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
+  const [isSuccessSnackbarOpen, setIsSuccessSnackbarOpen] =
+    React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState("");
 
   const {
     data: categoryData,
@@ -65,6 +73,11 @@ export default function Form() {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!category || !eventName || !startDate || !endDate || !eventDate || !city || !venue || !description || !image) {
+      setErrorMessage("Tüm alanların doldurulması gerekiyor.");
+      setIsErrorSnackbarOpen(true);
+      return;
+    }
     const formData = new FormData();
 
     // Explicitly set the 'image' field as a File object
@@ -85,7 +98,10 @@ export default function Form() {
 
     try {
       const response = await EventService.add(formData);
-      console.log("başarılı", response);
+      setSuccessMessage(
+        "yeni bir etkinlik eklendi."
+      );
+      setIsSuccessSnackbarOpen(true)  
     } catch (error) {
       console.log("hata", error);
       setErrorMessage("Ekleme işlemi gerçekleşmedi.");
@@ -99,8 +115,7 @@ export default function Form() {
 
   return (
     <div
-      className="flex-col p-4 mx-auto text-fourth bg-gray-400 border rounded-md shadow-md lex md:flex-row min-w-[900px] "
-      style={{ zIndex: "1000" }}
+      className="flex-col p-4 mx-auto text-fourth bg-gray-400 border rounded-md shadow-dark lex md:flex-row max-w-[500px] "
     >
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
@@ -212,6 +227,16 @@ export default function Form() {
       >
         <Alert variant="filled" severity="error">
           {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isSuccessSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={() => setIsSuccessSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert variant="filled" severity="success">
+          {successMessage}
         </Alert>
       </Snackbar>
     </div>
