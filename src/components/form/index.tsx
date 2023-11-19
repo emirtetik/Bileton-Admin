@@ -26,11 +26,19 @@ const Alert = styled(MuiAlert)(({ theme }) => ({
     backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
   },
+  "&.MuiAlert-standardSuccess": {
+    backgroundColor: theme.palette.success.main,
+    color: theme.palette.success.contrastText,
+  },
 }));
 
+
 export default function Form() {
-  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
+  const [isSuccessSnackbarOpen, setIsSuccessSnackbarOpen] =
+    React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState("");
 
   const {
     data: categoryData,
@@ -65,6 +73,11 @@ export default function Form() {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!category || !eventName || !startDate || !endDate || !eventDate || !city || !venue || !description || !image) {
+      setErrorMessage("Tüm alanların doldurulması gerekiyor.");
+      setIsErrorSnackbarOpen(true);
+      return;
+    }
     const formData = new FormData();
 
     // Explicitly set the 'image' field as a File object
@@ -81,34 +94,36 @@ export default function Form() {
     formData.append("venue", venue);
     formData.append("description", description);
 
-    console.log("this is form data", formData.get("image"));
 
     try {
       const response = await EventService.add(formData);
-      console.log("başarılı", response);
+      console.log('Response:', response);
+      setSuccessMessage("yeni bir etkinlik eklendi.");
+      setIsSuccessSnackbarOpen(true);
     } catch (error) {
-      console.log("hata", error);
       setErrorMessage("Ekleme işlemi gerçekleşmedi.");
       setIsErrorSnackbarOpen(true);
     }
   };
-  const setSelectedFile = (event) => {
-    setImage(event.target.files[0]);
-    console.log("this is image", event.target.files[0]);
-  };
+ const setSelectedFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const selectedFile = event.target.files ? event.target.files[0] : null;
+  setImage(selectedFile);
+};
 
   return (
-    <div className="flex-col p-4 mx-auto text-fourth bg-fifth border rounded-lg shadow-md lex md:flex-row min-w-[600px]">
-      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-lg bg-fourth">
+    <div
+      className="flex-col w-10/12 h-auto p-2 mx-auto bg-gray-400 border rounded-md text-fourth shadow-dark lex md:flex-row"
+    >
+      <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinlik Kategorisi:</label>
+          <label className="font-bold ">Etkinlik Kategorisi:</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           >
             {categoryData?.map((category: Category) => (
               <option key={category.id} value={category.id} className="">
@@ -118,71 +133,71 @@ export default function Form() {
           </select>
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinligin Adi:</label>
+          <label className="font-bold ">Etkinligin Adi:</label>
 
           <input
             type="text"
             value={eventName}
             onChange={(e) => setEventName(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
+       
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Image:</label>
-          <input type="file" name="image" onChange={setSelectedFile} />
-        </div>
-
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Bilet Satış Başlangıç Tarihi: </label>
+          <label className="font-bold ">Bilet Satış Başlangıç Tarihi: </label>
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Bilet Satış Bitiş Tarihi: </label>
+          <label className="font-bold ">Bilet Satış Bitiş Tarihi: </label>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label>Etkinligin Tarihi:</label>
+          <label className="font-bold ">Etkinligin Tarihi:</label>
           <input
             type="date"
             value={eventDate}
             onChange={(e) => setEventDate(e.target.value)}
-            className="text-black border rounded-lg "
+            className="text-black border rounded-md "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label> Sehir seçiniz:</label>
+          <label className="font-bold "> Sehir seçiniz:</label>
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
         <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label> Mekanı seçiniz:</label>
+          <label className="font-bold "> Mekanı seçiniz:</label>
           <input
             type="text"
             value={venue}
             onChange={(e) => setVenue(e.target.value)}
-            className="text-black border-2 rounded-lg border-secondary "
+            className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
+        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+          <label className="font-bold ">Etkinlik için resim seçin:</label>
+          <input type="file" name="image" onChange={setSelectedFile} />
+        </div>
         <div className="grid items-start mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label> Etkinlik açıklama:</label>
+          <label className="font-bold "> Etkinlik açıklama:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="text-black border-2 border-secondary rounded-lg h-[150px] "
+            className="w-2/3 text-black border-2 border-yellow-300 rounded-md h-3/3 "
           />
         </div>
         <div className="grid justify-items-stretch ">
@@ -193,7 +208,7 @@ export default function Form() {
             sx={{
               borderRadius: "30px",
               width: "20%",
-              justifySelf: "end",
+              justifySelf: "center",
               border: "1px solid white",
             }}
           >
@@ -209,6 +224,16 @@ export default function Form() {
       >
         <Alert variant="filled" severity="error">
           {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isSuccessSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={() => setIsSuccessSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert variant="filled" severity="success">
+          {successMessage}
         </Alert>
       </Snackbar>
     </div>

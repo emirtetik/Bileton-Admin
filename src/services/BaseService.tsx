@@ -8,7 +8,7 @@ export const BaseService = {
     }
     return await response.json();
   },
-  post: async (path: string, formData: unknown) => {
+  post: async (path: string, formData: BodyInit | null | undefined) => {
     const response = await fetch(BASE_API_URL + path, {
       method: "POST",
       headers: {
