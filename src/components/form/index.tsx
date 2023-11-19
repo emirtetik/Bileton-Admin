@@ -51,8 +51,8 @@ export default function Form() {
   );
   const [category, setCategory] = useState("");
   const [eventName, setEventName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [city, setCity] = useState("");
   const [venue, setVenue] = useState("");
@@ -73,22 +73,21 @@ export default function Form() {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!category || !eventName || !startDate || !endDate || !eventDate || !city || !venue || !description || !image) {
+    if (!category || !eventName || !startTime || !endTime || !eventDate || !city || !venue || !description || !image) {
       setErrorMessage("Tüm alanların doldurulması gerekiyor.");
       setIsErrorSnackbarOpen(true);
       return;
     }
     const formData = new FormData();
 
-    // Explicitly set the 'image' field as a File object
     if (image !== null) {
       formData.append("image", image);
     }
 
     formData.append("category", category);
     formData.append("eventName", eventName);
-    formData.append("startDate", startDate);
-    formData.append("endDate", endDate);
+    formData.append("startTime", startTime);
+    formData.append("endTime", endTime);
     formData.append("eventDate", eventDate);
     formData.append("city", city);
     formData.append("venue", venue);
@@ -100,6 +99,15 @@ export default function Form() {
       console.log('Response:', response);
       setSuccessMessage("yeni bir etkinlik eklendi.");
       setIsSuccessSnackbarOpen(true);
+      setCategory("");
+      setEventName("");
+      setStartTime("");
+      setEndTime("");
+      setEventDate("");
+      setCity("");
+      setVenue("");
+      setDescription("");
+      setImage(null);
     } catch (error) {
       setErrorMessage("Ekleme işlemi gerçekleşmedi.");
       setIsErrorSnackbarOpen(true);
@@ -112,13 +120,13 @@ export default function Form() {
 
   return (
     <div
-      className="flex-col w-10/12 h-auto p-2 mx-auto bg-gray-400 border rounded-md text-fourth shadow-dark lex md:flex-row"
+      className="flex flex-col w-full max-w-screen-lg mx-auto p-4 bg-gray-400 border rounded-md text-fourth shadow-dark"
     >
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
+        <div className="flex flex-col ">
           <label className="font-bold ">Etkinlik Kategorisi:</label>
           <select
             value={category}
@@ -132,7 +140,7 @@ export default function Form() {
             ))}
           </select>
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="flex flex-col ">
           <label className="font-bold ">Etkinligin Adi:</label>
 
           <input
@@ -143,25 +151,25 @@ export default function Form() {
           />
         </div>
        
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label className="font-bold ">Bilet Satış Başlangıç Tarihi: </label>
+        <div className="flex flex-col ">
+          <label className="font-bold ">Etkinlik Başlangıç Saati: </label>
           <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
             className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
-          <label className="font-bold ">Bilet Satış Bitiş Tarihi: </label>
+        <div className="flex flex-col ">
+          <label className="font-bold ">Etkinlik Bitiş Saati: </label>
           <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
             className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="flex flex-col ">
           <label className="font-bold ">Etkinligin Tarihi:</label>
           <input
             type="date"
@@ -170,7 +178,7 @@ export default function Form() {
             className="text-black border rounded-md "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="flex flex-col ">
           <label className="font-bold "> Sehir seçiniz:</label>
           <input
             type="text"
@@ -179,7 +187,7 @@ export default function Form() {
             className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="flex flex-col ">
           <label className="font-bold "> Mekanı seçiniz:</label>
           <input
             type="text"
@@ -188,7 +196,7 @@ export default function Form() {
             className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-        <div className="flex flex-col items-start justify-between mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="flex flex-col ">
           <label className="font-bold ">Etkinlik için resim seçin:</label>
           <input type="file" name="image" onChange={setSelectedFile} />
         </div>
@@ -197,20 +205,15 @@ export default function Form() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-2/3 text-black border-2 border-yellow-300 rounded-md h-3/3 "
+            className="w-full text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-        <div className="grid justify-items-stretch ">
+        <div className="col-span-2 flex justify-center">
           <MuiButton
             type="submit"
             size="small"
             variant="contained"
-            sx={{
-              borderRadius: "30px",
-              width: "20%",
-              justifySelf: "center",
-              border: "1px solid white",
-            }}
+            className="rounded-full border border-white"
           >
             Ürün ekle
           </MuiButton>

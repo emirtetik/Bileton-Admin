@@ -1,6 +1,4 @@
 import Form from "../../components/form";
-// import MuiButton from "../../components/mui/button";
-// import { GrClose } from "react-icons/gr";
 
 const addEvent = () => {
   return (
