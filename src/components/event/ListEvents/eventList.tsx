@@ -52,7 +52,7 @@ const EventList = (props: {
   };
   
 const columns: GridColDef[] = [
-  
+ 
   {
     field: "date",
     headerName: "Date",
@@ -69,7 +69,7 @@ const columns: GridColDef[] = [
   {
     field: "name",
     headerName: "Event",
-    width: 400,
+    width: 300,
     renderCell: (params) => (
      
         <div className="flex items-center justify-center">
@@ -81,9 +81,10 @@ const columns: GridColDef[] = [
                   params.row.image.contentType
                 };base64,${uint8ArrayToBase64(params.row.image.data.data)}`}
                 alt={params.row.name}
+                
               />
             ) : (
-              <img src="https://via.placeholder.com/150" alt="placeholder" />
+              <img src="https://via.placeholder.com/150" alt="placeholder" className="rounded-full" />
             )}
           </div>
 
@@ -110,6 +111,19 @@ const columns: GridColDef[] = [
     ),
   },
   {
+    field: "Time",
+    headerName: "EventTime",
+    width: 150,
+
+
+      renderCell: (params) => (
+        <h3 className="whitespace-no-wrap text-fourth">
+              {params.row.startTime}/{params.row.endTime} 
+       </h3>
+      ),
+
+  },
+  {
     field: 'delete',
     headerName: 'Delete',
     width: 150,
@@ -122,6 +136,7 @@ const columns: GridColDef[] = [
   if (props.error) return <div>failed to load</div>;
   if (props.isLoading) return <div>loading...</div>;
   console.log(props.events);
+  
   const rows = props.events;
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
