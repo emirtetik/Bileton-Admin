@@ -37,7 +37,7 @@ const Login = () => {
   const redirectToAdminPanel = () => {
    setTimeout(() => {
     navigate("/home");
-   },4000)
+   },2000)
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,12 +72,12 @@ const Login = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            <h6 className="text-subtitle font-raleway font-bold text-gray-700">
+            <h6 className="font-bold text-gray-700 text-subtitle font-raleway">
               Admin Panel
             </h6>
           </Typography>
           <Box
-            className="flex flex-col gap-3 w-1/3"
+            className="flex flex-col w-1/3 gap-3"
             component="form"
             onSubmit={handleSubmit}
             noValidate
