@@ -19,13 +19,6 @@ const Alert = styled(MuiAlert)(({ theme }) => ({
   },
 }));
 
-function uint8ArrayToBase64(uint8Array:any) {
-  let binary = "";
-  uint8Array.forEach((byte:any) => {
-    binary += String.fromCharCode(byte);
-  });
-  return btoa(binary);
-}
 
 const EventList = (props: {
   events: event[];
@@ -74,18 +67,14 @@ const columns: GridColDef[] = [
      
         <div className="flex items-center justify-center">
           <div className="flex-shrink-0 w-12 h-12 ">
-            {params.row.image.data ? (
-              <img
+          <img
                 className="object-contain w-full h-full "
-                src={`data:${
-                  params.row.image.contentType
-                };base64,${uint8ArrayToBase64(params.row.image.data.data)}`}
+                src={
+                  params.row.image
+               }
                 alt={params.row.name}
                 
               />
-            ) : (
-              <img src="https://via.placeholder.com/150" alt="placeholder" className="rounded-full" />
-            )}
           </div>
 
           <h3 className="pl-3 whitespace-no-wrap text-black">

@@ -80,10 +80,9 @@ export default function Form() {
     }
     const formData = new FormData();
 
-    if (image !== null) {
-      formData.append("image", image);
-    }
-
+    // if (image !== null) {
+    //   formData.append("image", image);
+    // }
     formData.append("category", category);
     formData.append("eventName", eventName);
     formData.append("startTime", startTime);
@@ -92,6 +91,7 @@ export default function Form() {
     formData.append("city", city);
     formData.append("venue", venue);
     formData.append("description", description);
+    formData.append("image", image);
 
 
     try {
