@@ -19,13 +19,6 @@ const Alert = styled(MuiAlert)(({ theme }) => ({
   },
 }));
 
-function uint8ArrayToBase64(uint8Array:any) {
-  let binary = "";
-  uint8Array.forEach((byte:any) => {
-    binary += String.fromCharCode(byte);
-  });
-  return btoa(binary);
-}
 
 const EventList = (props: {
   events: event[];
@@ -52,7 +45,7 @@ const EventList = (props: {
   };
   
 const columns: GridColDef[] = [
-  
+ 
   {
     field: "date",
     headerName: "Date",
@@ -69,22 +62,19 @@ const columns: GridColDef[] = [
   {
     field: "name",
     headerName: "Event",
-    width: 400,
+    width: 300,
     renderCell: (params) => (
      
         <div className="flex items-center justify-center">
           <div className="flex-shrink-0 w-12 h-12 ">
-            {params.row.image.data ? (
-              <img
+          <img
                 className="object-contain w-full h-full "
-                src={`data:${
-                  params.row.image.contentType
-                };base64,${uint8ArrayToBase64(params.row.image.data.data)}`}
+                src={
+                  params.row.image
+               }
                 alt={params.row.name}
+                
               />
-            ) : (
-              <img src="https://via.placeholder.com/150" alt="placeholder" />
-            )}
           </div>
 
           <h3 className="pl-3 whitespace-no-wrap text-black">
@@ -110,6 +100,19 @@ const columns: GridColDef[] = [
     ),
   },
   {
+    field: "Time",
+    headerName: "EventTime",
+    width: 150,
+
+
+      renderCell: (params) => (
+        <h3 className="whitespace-no-wrap text-fourth">
+              {params.row.startTime}/{params.row.endTime} 
+       </h3>
+      ),
+
+  },
+  {
     field: 'delete',
     headerName: 'Delete',
     width: 150,
@@ -122,6 +125,7 @@ const columns: GridColDef[] = [
   if (props.error) return <div>failed to load</div>;
   if (props.isLoading) return <div>loading...</div>;
   console.log(props.events);
+  
   const rows = props.events;
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
