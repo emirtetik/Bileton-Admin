@@ -77,7 +77,7 @@ const columns: GridColDef[] = [
               />
           </div>
 
-          <h3 className="pl-3 whitespace-no-wrap text-black">
+          <h3 className="pl-3 text-black whitespace-no-wrap">
             {params.row.name}
           </h3>
         </div>
@@ -88,7 +88,7 @@ const columns: GridColDef[] = [
     headerName: "Location",
     width: 200,
     renderCell: (params) => (
-      <h3 className="whitespace-no-wrap text-black">{params.row.city}</h3>
+      <h3 className="text-black whitespace-no-wrap">{params.row.city}</h3>
     ),
   },
   {
@@ -96,7 +96,7 @@ const columns: GridColDef[] = [
     headerName: "Category",
     width: 200,
     renderCell: (params) => (
-      <h3 className="whitespace-no-wrap text-black">{params.row.category}</h3>
+      <h3 className="text-black whitespace-no-wrap">{params.row.category}</h3>
     ),
   },
   {
@@ -124,40 +124,38 @@ const columns: GridColDef[] = [
 
   if (props.error) return <div>failed to load</div>;
   if (props.isLoading) return <div>loading...</div>;
-  console.log(props.events);
+
   
   const rows = props.events;
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
-  return (
-    <div className="w-full   " 
-     >
-         
-      <DataGrid
-        rows={rows}
-        getRowId={(row) => row._id.toString()}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        className="  z-10  bg-red-900 "
-      />
-      <Snackbar
-   open={isErrorSnackbarOpen}
-   autoHideDuration={5000}
-   onClose={() => setIsErrorSnackbarOpen(false)}
-   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
- >
-   <Alert variant="filled" severity="error">
-     {errorMessage}
-   </Alert>
- </Snackbar>
-    </div>
-  );
-};
+    return (
+      <div className="w-full overflow-hidden">
+          <DataGrid
+            rows={rows}
+            getRowId={(row) => row._id.toString()}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            className="bg-red-900"
+          />
+          <Snackbar
+            open={isErrorSnackbarOpen}
+            autoHideDuration={5000}
+            onClose={() => setIsErrorSnackbarOpen(false)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            <Alert variant="filled" severity="error">
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+        </div>
+    );
+  };
 
 export default EventList;
 
