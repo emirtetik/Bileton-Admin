@@ -4,7 +4,7 @@ import NotFound from "../pages/notFound";
 import MainMenu from "../layout/main";
 import Login from "../pages/login";
 import AddEvent from "../pages/addEvent";
-// import PrivateRoute from "./privateRoute";
+import PrivateRoute from "./privateRoute";
 
 const routes = createBrowserRouter([
    {
@@ -16,10 +16,10 @@ const routes = createBrowserRouter([
     path: "/",
     element: <MainMenu/>,
     children: [ 
-      // { path:"home", element: <PrivateRoute path={"/home"} ><Home /></PrivateRoute> },
-      // { path:"AddEvent", element: <PrivateRoute path={"/AddEvent"}><AddEvent /></PrivateRoute> },
-      {path:"/home", element: <Home/>},
-      {path:"/AddEvent", element: <AddEvent/>},
+      { path:"home", element: <PrivateRoute path={"home"} ><Home /></PrivateRoute> },
+      { path:"AddEvent", element: <PrivateRoute path={"AddEvent"}><AddEvent /></PrivateRoute> },
+      // {path:"/home", element: <Home/>},
+      // {path:"/AddEvent", element: <AddEvent/>},
       {
         path: "*",
         element: <NotFound />,

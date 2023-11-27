@@ -1,21 +1,20 @@
 import MuiButton from "../mui/button";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { CategoryService } from "../../services/CategoryService";
 import { EventService } from "../../services/EventServices";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
+import { CategoryService } from "../../services/CategoryService";
 
 type Category = {
   id: string;
   name: string;
 };
+
+const categoryFetch = () => CategoryService.getAll()
 const cityFetch = () => {
   return EventService.getAll();
-};
-const fetcher = () => {
-  return CategoryService.getAll();
 };
 
 const Alert = styled(MuiAlert)(({ theme }) => ({
@@ -40,16 +39,8 @@ export default function Form() {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [successMessage, setSuccessMessage] = React.useState("");
 
-  const {
-    data: categoryData,
-    isLoading: categoryIsLoading,
-    error: categoryError,
-  } = useQuery("categories", fetcher);
-  const { isLoading: cityIsLoading, error: cityError } = useQuery(
-    "city",
-    cityFetch
-  );
   const [category, setCategory] = useState("");
+  const [selectCategory, setSelectCategory] = useState("");
   const [eventName, setEventName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -59,7 +50,13 @@ export default function Form() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
-  if (categoryIsLoading) {
+ const {data:categoryData, error:categoryError , isLoading:categoryLoad} = useQuery("category", categoryFetch)
+  const { isLoading: cityIsLoading, error: cityError } = useQuery(
+    "city",
+    cityFetch
+  );
+
+  if (categoryLoad) {
     return <div>Loading...</div>;
   }
   if (categoryError) {
@@ -100,6 +97,7 @@ export default function Form() {
       setSuccessMessage("yeni bir etkinlik eklendi.");
       setIsSuccessSnackbarOpen(true);
       setCategory("");
+      setSelectCategory("");
       setEventName("");
       setStartTime("");
       setEndTime("");
@@ -120,21 +118,30 @@ export default function Form() {
 
   return (
     <div
-      className="flex flex-col w-full max-w-screen-lg mx-auto p-4 bg-gray-400 border rounded-md text-fourth shadow-dark"
+      className="flex flex-col w-full max-w-screen-lg p-4 mx-auto bg-gray-400 border rounded-md text-fourth shadow-dark"
     >
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
         <div className="flex flex-col ">
-          <label className="font-bold ">Etkinlik Kategorisi:</label>
-          <select
+          <label className="font-bold ">Yeni Kategori Ekle:</label>
+          <input
+            type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="text-black border-2 border-yellow-300 rounded-md "
+          />
+        </div>
+        <div className="flex flex-col ">
+          <label className="font-bold ">Kategori Seç:</label>
+          <select
+            value={selectCategory}
+            onChange={(e) => setSelectCategory(e.target.value)}
+            className="text-black border-2 border-yellow-300 rounded-md "
           >
             {categoryData?.map((category: Category) => (
-              <option key={category.id} value={category.id} className="">
+              <option key={category.id} value={category.id} >
                 {category.name}
               </option>
             ))}
@@ -200,20 +207,20 @@ export default function Form() {
           <label className="font-bold ">Etkinlik için resim seçin:</label>
           <input type="file" name="image" onChange={setSelectedFile} />
         </div>
-        <div className="grid items-start mb-4 space-x-0 md:space-x-4 md:flex-row">
+        <div className="grid items-center mb-4 md:flex-row">
           <label className="font-bold "> Etkinlik açıklama:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full text-black border-2 border-yellow-300 rounded-md "
+            className="w-full text-black border-2 border-yellow-300 rounded-md h-72 "
           />
         </div>
-        <div className="col-span-2 flex justify-center">
+        <div className="flex justify-center col-span-2">
           <MuiButton
             type="submit"
             size="small"
             variant="contained"
-            className="rounded-full border border-white"
+            className="border border-white rounded-full"
           >
             Ürün ekle
           </MuiButton>
