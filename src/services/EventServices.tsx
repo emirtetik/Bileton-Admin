@@ -3,7 +3,6 @@ import { BaseService } from "./BaseService";
 export const EventService = {
   getAll: async () => {
     const result = await BaseService.get("events");
-    console.log(result);
     return result;
   },
   get: async (id: string) => await BaseService.get("events/" + id),
