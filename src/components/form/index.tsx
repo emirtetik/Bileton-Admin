@@ -12,7 +12,7 @@ type Category = {
   name: string;
 };
 
-const categoryFetch = () => CategoryService.getAll()
+const categoryFetch = () => CategoryService.getAll();
 const cityFetch = () => {
   return EventService.getAll();
 };
@@ -31,7 +31,6 @@ const Alert = styled(MuiAlert)(({ theme }) => ({
   },
 }));
 
-
 export default function Form() {
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
   const [isSuccessSnackbarOpen, setIsSuccessSnackbarOpen] =
@@ -42,6 +41,7 @@ export default function Form() {
   const [category, setCategory] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
   const [eventName, setEventName] = useState("");
+  const [artist, setArtist] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -49,12 +49,16 @@ export default function Form() {
   const [venue, setVenue] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
-
- const {data:categoryData, error:categoryError , isLoading:categoryLoad} = useQuery("category", categoryFetch)
+  const {
+    data: categoryData,
+    error: categoryError,
+    isLoading: categoryLoad,
+  } = useQuery("category", categoryFetch);
   const { isLoading: cityIsLoading, error: cityError } = useQuery(
     "city",
     cityFetch
   );
+  
 
   if (categoryLoad) {
     return <div>Loading...</div>;
@@ -70,7 +74,17 @@ export default function Form() {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!category || !eventName || !startTime || !endTime || !eventDate || !city || !venue || !description || !image) {
+    if (
+      !eventName ||
+      !artist ||
+      !startTime ||
+      !endTime ||
+      !eventDate ||
+      !city ||
+      !venue ||
+      !description ||
+      !image
+    ) {
       setErrorMessage("Tüm alanların doldurulması gerekiyor.");
       setIsErrorSnackbarOpen(true);
       return;
@@ -80,8 +94,9 @@ export default function Form() {
     // if (image !== null) {
     //   formData.append("image", image);
     // }
-    formData.append("category", category);
+    formData.append("category", selectCategory ? selectCategory : category);
     formData.append("eventName", eventName);
+    formData.append("artist", artist);
     formData.append("startTime", startTime);
     formData.append("endTime", endTime);
     formData.append("eventDate", eventDate);
@@ -90,15 +105,15 @@ export default function Form() {
     formData.append("description", description);
     formData.append("image", image);
 
-
     try {
       const response = await EventService.add(formData);
-      console.log('Response:', response);
+      console.log("Response:", response);
       setSuccessMessage("yeni bir etkinlik eklendi.");
       setIsSuccessSnackbarOpen(true);
       setCategory("");
       setSelectCategory("");
       setEventName("");
+      setArtist("");
       setStartTime("");
       setEndTime("");
       setEventDate("");
@@ -111,19 +126,21 @@ export default function Form() {
       setIsErrorSnackbarOpen(true);
     }
   };
- const setSelectedFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const selectedFile = event.target.files ? event.target.files[0] : null;
-  setImage(selectedFile);
-};
+  const setSelectedFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files ? event.target.files[0] : null;
+    setImage(selectedFile);
+  };
+
 
   return (
-    <div
-      className="flex flex-col w-full max-w-screen-lg p-4 mx-auto bg-gray-400 border rounded-md text-fourth shadow-dark"
-    >
+    <div className="flex flex-col w-full max-w-screen-lg p-4 mx-auto bg-gray-400 border rounded-md text-fourth shadow-dark">
       <h1 className="py-3 m-6 text-xl font-extrabold text-center text-white rounded-md bg-fourth">
         Yeni Bir Etkinlik Ekle
       </h1>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4"
+      >
         <div className="flex flex-col ">
           <label className="font-bold ">Yeni Kategori Ekle:</label>
           <input
@@ -141,7 +158,7 @@ export default function Form() {
             className="text-black border-2 border-yellow-300 rounded-md "
           >
             {categoryData?.map((category: Category) => (
-              <option key={category.id} value={category.id} >
+              <option key={category.id} value={category.name}>
                 {category.name}
               </option>
             ))}
@@ -157,7 +174,16 @@ export default function Form() {
             className="text-black border-2 border-yellow-300 rounded-md "
           />
         </div>
-       
+        <div className="flex flex-col ">
+          <label className="font-bold ">Sanatçının Adı:</label>
+
+          <input
+            type="text"
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+            className="text-black border-2 border-yellow-300 rounded-md "
+          />
+        </div>
         <div className="flex flex-col ">
           <label className="font-bold ">Etkinlik Başlangıç Saati: </label>
           <input

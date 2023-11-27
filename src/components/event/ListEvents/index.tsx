@@ -6,7 +6,8 @@ const fetcher = () => EventService.getAll();
 
 const ListEvent = () => {
   const { data: events, isLoading, error } = useQuery("events", fetcher);
-
+  console.log(events);
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
