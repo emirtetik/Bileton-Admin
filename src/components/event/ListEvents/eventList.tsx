@@ -130,7 +130,7 @@ const columns: GridColDef[] = [
   if (props.events.length === 0)
     return <div className="text-center">No events found</div>;
     return (
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-x-auto">
           <DataGrid
             rows={rows}
             getRowId={(row) => row._id.toString()}
