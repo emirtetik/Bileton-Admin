@@ -73,11 +73,11 @@ const Login = () => {
         >
           <Typography component="h1" variant="h5">
             <h6 className="font-bold text-gray-700 text-subtitle font-raleway">
-              Admin Panel
+             Bileton Admin Giriş
             </h6>
           </Typography>
           <Box
-            className="flex flex-col w-1/3 gap-3"
+            className="flex flex-col w-2/3 gap-3 sm:w-1/3"
             component="form"
             onSubmit={handleSubmit}
             noValidate
@@ -119,7 +119,7 @@ const Login = () => {
               variant="outlined"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-white rounded-md "
+              className="bg-white rounded-md"
               size="medium"
               sx={{
                 "& .MuiOutlinedInput-root": {
